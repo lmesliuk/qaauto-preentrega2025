@@ -6,15 +6,22 @@ from selenium.webdriver.chrome.options import Options
 
 @pytest.fixture
 def driver():
-    # Esto evita el cartel de contraseña vulnerada
     opts = Options()
+
+    # 🔹 Evita el cartel de "contraseña vulnerada" y el password manager
     prefs = {
         "credentials_enable_service": False,
         "profile.password_manager_enabled": False,
     }
     opts.add_experimental_option("prefs", prefs)
+
+    # 🔹 Oculta el mensaje "Chrome is being controlled by automated test software"
     opts.add_experimental_option("excludeSwitches", ["enable-automation"])
     opts.add_experimental_option("useAutomationExtension", False)
+
+    # ✅ Desactiva explícitamente la detección de contraseñas filtradas
+    opts.add_argument("--disable-features=PasswordLeakDetection")
+    opts.add_argument("--disable-features=PasswordManagerOnboarding")
     drv = webdriver.Chrome(options=opts)
     drv.maximize_window()
     yield drv

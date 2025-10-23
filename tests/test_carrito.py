@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def test_agregar_producto(login_in_driver):
     try:
         driver = login_in_driver
+        #Espera para que cargue elementos
         wait = WebDriverWait(driver, 20)
         items = driver.find_elements(By.CLASS_NAME, "inventory_item")
         assert items, "No se encontraron productos en el inventario"
@@ -24,5 +25,3 @@ def test_agregar_producto(login_in_driver):
     except Exception as e:
         print(f"Error en test_login: {e}")
         raise
-    finally:
-        driver.quit()

@@ -4,12 +4,13 @@ from selenium.webdriver.common.by import By
 def test_inventory(login_in_driver):
     try:
         driver = login_in_driver
+        #Verificación del título de la página
         assert driver.title == "Swag Labs"
         products = driver.find_elements(By.CLASS_NAME, "inventory_item")
+        #Verificación de que haya productos
         assert len(products) > 0, "No hay productos visibles en la pagina"
     except Exception as e:
         print(f"Error en test_inventory: {e}")
         raise
-    finally:
-        driver.quit()
+
 
